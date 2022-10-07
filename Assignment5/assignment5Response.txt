@@ -1,0 +1,9 @@
+The final red black tree is very sensitive to the input order of nodes. After every insert, the fixup method loops 
+depending on the layout to balance the tree. This includes rotations and recolors. So inserting in a different 
+order causing the rotations and other parts to be in a different order. Overall there is probably hundreds of 
+valid rb trees with the exact same nodes. So altering the insert order determines the final result, but it is still
+always a valid rb tree.
+
+The correct insertion sequence for the tree in the assignment is: [28, 21, 26, 14, 41, 47, 7, 23, 12, 30, 17, 38, 10, 19, 35, 16, 20, 15, 39, 3]
+(This is the order I use in my program, but I thought I would just put it here too)
+

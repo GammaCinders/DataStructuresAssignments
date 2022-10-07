@@ -1,0 +1,22 @@
+recursive function to get tree inorder first: 
+
+getKeysInorder():
+if node is null
+	return null
+
+getKeysInorder(leftChild)
+add root data to array
+add getKeysInorder(rightChild) to array
+
+return the new combined array
+
+
+
+then actual validate function:
+
+get inorder array from above
+for each index of inorder
+	if inorder[index] > inorder[index + 1]
+		return false
+return true
+

@@ -1,0 +1,41 @@
+QUESTION 1:
+
+Order of growth rate:
+
+2/N < 37 < sqrt(N) < N < N*log(log(N)) < N*log(N) < N*log(N^2) < N^1.5 < N^2 < (N^2)*log(N) < N^3 < 3^N
+
+
+
+QUESTION 2:
+
+Same growth rates:
+
+The only two that should be the same are 2/N and 37. All the other rates are at least slightly different. For example, 
+Nlog(N) and Nlog(log(N)) are very similar, but not quite the same. However, 2/N shrinks, and so the growth rate goes to
+0 as n goes to infinity. So at high values 2/N and 37 almost have the same growth rate of 0.
+
+
+
+QUESTION 3:
+
+Loop analysis (Part a):
+
+loopA -	Simple O(N) loop, each additional increase to N increases run time linearly. 
+
+loopB -	Simple O(N^2) loop, each additional increase to N increases run time quadraticly.
+
+loopC -	Similar to loopB but different. Still O(N^2). However the run time should be ~(N^2)/2
+	This is because the inner loop runs i times, but the first inner loop runs 0 times and the last inner loop runs N times.
+	It also increases linearly. So the average iterations for the inner loop is the middle value of N/2.
+
+loopD -	Still O(N^2). Following the logic above, the only new addition here is the check if j is even. 
+	Since j runs i times, j will run at least n/2 times for each i loop. It's really hard to tell the exact run time. 
+	This is because j runs half of i, rounded up. Which means it should be ~3/4 of the 1/2 run time from above. So
+	the run time should be most accurately described by 3(N^2)/8.
+
+
+Compare Analysis with time (Part c):
+	They were all very accurate. The only one I'm surprised I was right about was loopD. It seems like my answer
+	does accurately predict the run time. I have ran my test cases many times with a 10% margin for error and
+	they've passed every time. I believe all of my analysis were accurate in terms of real world run times. 
+
