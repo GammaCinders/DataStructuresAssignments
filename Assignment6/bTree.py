@@ -10,7 +10,6 @@ class Node(object):
         self.key = [None]*((2*t) - 1);
         self.c = [None]*(2*t);
 
-
 class BTree(object):
     root = None; 
     t = 0;
@@ -20,29 +19,26 @@ class BTree(object):
         self.root = Node(t);
         self.root.leaf = True;
         self.root.n = 0;
-
-    def splitChild(self, x, i, y):
-        #Setup new node z
+        
+    def splitChild(self, x, i):
         z = Node(self.t);
+        y = x.c[i];
         z.leaf = y.leaf;
         z.n = self.t - 1;
-        #copy second half of y into first half of z
+        #copying key/children
         for j in range(0, self.t-1):
             z.key[j] = y.key[j+self.t];
-        #copy second half of y children into z
         if(not y.leaf):
             for j in range(0, self.t):
-                z.c[j] = y.key[j+self.t];
+                z.c[j] = y.c[j+self.t];
         y.n = self.t - 1;
-        #shift child pointers to make room
+        #shifting key/children
         for j in range(x.n, i, -1):
             x.c[j+1] = x.c[j];
         x.c[i+1] = z;
-        #shift keys to make room
         for j in range(x.n, i, -1):
             x.key[j] = x.key[j-1];
-        #add key
-        x.key[i] = y.key[i];
+        x.key[i] = y.key[self.t-1];
         x.n += 1;
         
     def insert(self, key):
@@ -53,7 +49,7 @@ class BTree(object):
             s.leaf = False;
             s.n = 0;
             s.c[0] = r;
-            self.splitChild(s, 0, r);
+            self.splitChild(s, 0);
             self.insertNonfull(s, key);
         else:
             self.insertNonfull(r, key);
@@ -71,7 +67,7 @@ class BTree(object):
                 i -= 1;
             i += 1;
             if(x.c[i].n == ((2*self.t) - 1)):
-                self.splitChild(x, i, x.c[i]);
+                self.splitChild(x, i);
                 if(key > x.key[i]):
                     i += 1;
             self.insertNonfull(x.c[i], key);
@@ -83,7 +79,7 @@ class BTree(object):
 ########################################
 
 def printTree(tree, title):
-    width = 1200;
+    width = 1500;
     height = 500;
     win = GraphWin("BTree", width, height);
     win.setBackground(color_rgb(3, 42, 64));
@@ -108,7 +104,7 @@ def printNodes(win, tree, node, pos, xOffset):
     textOffset = tree.t - 1;
     for i in range(0, node.n):
         offset = (i-textOffset) * ((2*halfWidth)/((2*tree.t)-1));
-        text = Text(Point(actualPos.x - offset, actualPos.y), node.key[i]); 
+        text = Text(Point(actualPos.x + offset, actualPos.y), node.key[i]); 
         text.setOutline("white");
         text.draw(win);
 
@@ -129,7 +125,7 @@ def printNodes(win, tree, node, pos, xOffset):
 
 bTree = BTree(2);
 
-for i in range(8):
+for i in range(12):
     bTree.insert(i);
     win = printTree(bTree, "Test");
     win.getKey();
