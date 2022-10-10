@@ -85,7 +85,7 @@ class BTree(object):
 ########################################
 
 def printTree(tree, title):
-    width = 2200;
+    width = 1200;
     height = 500;
     win = GraphWin("BTree", width, height);
     win.setBackground(color_rgb(3, 42, 64));
@@ -95,25 +95,25 @@ def printTree(tree, title):
     graphTitle.setSize(10);
     graphTitle.draw(win);
 
-    printNodes(win, tree, tree.root, Point(width, 60), 2*width);
+    printNodes(win, tree, tree.root, Point(width/2, 60), width);
 
     return win;
 
 def printNodes(win, tree, node, pos, width):
-    halfWidth = ((2*tree.t)-1)*10;
+    halfWidth = (node.n)*6;
 
     if(not node.leaf):
         #print lines and call recursive first
         #it's kinda odd order, but it works easier I think
         lineStart = -halfWidth; 
-        nextWidth = width / ((2*tree.t));
-        childOffsetRatio = ((-2*tree.t) + 1);
+        nextWidth = width / (node.n + 1);
+        childOffsetRatio = -(node.n);
         for i in range(0, node.n + 1):
             childPos = Point(pos.x + childOffsetRatio*(nextWidth/2), pos.y + 60)
             childLine = Line(Point(pos.x + lineStart, pos.y+10), Point(childPos.x, childPos.y - 10));
             childLine.setOutline("white");
             childLine.draw(win);
-            lineStart += (halfWidth*2) / ((2*tree.t) - 1);
+            lineStart += (halfWidth*2) / (node.n);
             printNodes(win, tree, node.c[i], childPos, nextWidth); 
             childOffsetRatio += 2;
 
@@ -123,11 +123,8 @@ def printNodes(win, tree, node, pos, width):
     rect.draw(win);
     #drawing data
     tempKeys = [];
-    for i in range(0, (2*tree.t) - 1):
-        if(i < node.n):
-            tempKeys.append(node.key[i]);
-        else:
-            tempKeys.append("_");
+    for i in range(0, node.n):
+        tempKeys.append(node.key[i]);
     keysText = Text(pos, tempKeys);
     keysText.setSize(10);
     keysText.setOutline("white");
