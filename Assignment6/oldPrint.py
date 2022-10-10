@@ -85,8 +85,8 @@ class BTree(object):
 ########################################
 
 def printTree(tree, title):
-    width = 1200;
-    height = 500;
+    width = 2600;
+    height = 800;
     win = GraphWin("BTree", width, height);
     win.setBackground(color_rgb(3, 42, 64));
 
@@ -95,25 +95,25 @@ def printTree(tree, title):
     graphTitle.setSize(10);
     graphTitle.draw(win);
 
-    printNodes(win, tree, tree.root, Point(width/2, 60), width);
+    printNodes(win, tree, tree.root, Point(width-300, 60), 2*(width-300));
 
     return win;
 
 def printNodes(win, tree, node, pos, width):
-    halfWidth = (node.n)*6;
+    halfWidth = ((2*tree.t)-1)*8;
 
     if(not node.leaf):
         #print lines and call recursive first
         #it's kinda odd order, but it works easier I think
         lineStart = -halfWidth; 
-        nextWidth = width / (node.n + 1);
-        childOffsetRatio = -(node.n);
+        nextWidth = width / ((2*tree.t));
+        childOffsetRatio = ((-2*tree.t) + 1);
         for i in range(0, node.n + 1):
             childPos = Point(pos.x + childOffsetRatio*(nextWidth/2), pos.y + 60)
             childLine = Line(Point(pos.x + lineStart, pos.y+10), Point(childPos.x, childPos.y - 10));
             childLine.setOutline("white");
             childLine.draw(win);
-            lineStart += (halfWidth*2) / (node.n);
+            lineStart += (halfWidth*2) / ((2*tree.t) - 1);
             printNodes(win, tree, node.c[i], childPos, nextWidth); 
             childOffsetRatio += 2;
 
@@ -123,8 +123,11 @@ def printNodes(win, tree, node, pos, width):
     rect.draw(win);
     #drawing data
     tempKeys = [];
-    for i in range(0, node.n):
-        tempKeys.append(node.key[i]);
+    for i in range(0, (2*tree.t) - 1):
+        if(i < node.n):
+            tempKeys.append(node.key[i]);
+        else:
+            tempKeys.append("_");
     keysText = Text(pos, tempKeys);
     keysText.setSize(10);
     keysText.setOutline("white");
@@ -144,5 +147,5 @@ for letter in list(string.ascii_lowercase):
 
 win = printTree(bTreeTwo, "BTree with t=2");
 win = printTree(bTreeThree, "BTree with t=3");
-win.getKey();
+win.getMouse();
 win.close();
