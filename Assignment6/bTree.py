@@ -10,6 +10,9 @@ class Node(object):
         self.key = [None]*((2*t) - 1);
         self.c = [None]*(2*t);
 
+    def __str__(self):
+        return self.key;
+
 class BTree(object):
     root = None; 
     t = 0;
@@ -72,6 +75,7 @@ class BTree(object):
                     i += 1;
             self.insertNonfull(x.c[i], key);
 
+
 ########################################
 # Cool graphical printing function
 # (just a modified version of what I 
@@ -95,6 +99,7 @@ def printTree(tree, title):
 
 def printNodes(win, tree, node, pos, xOffset):
     actualPos = Point(pos.x + xOffset, pos.y + 65);
+    childOffset = xOffset/(2*tree.t);
     #draw the square
     halfWidth = ((2*tree.t)-1)*14;
     nodeSquare = Rectangle(Point(actualPos.x - halfWidth, actualPos.y - 10), Point(actualPos.x + halfWidth, actualPos.y + 10)); 
@@ -111,12 +116,9 @@ def printNodes(win, tree, node, pos, xOffset):
     if(node.leaf):
         return;
     else:
-        for i in range(0, 2*tree.t):
-            if(node.c[i] == None):
-                break;
-
+        for i in range((-2*tree.t)-1, (2*tree.t), childOffset):
             childOffset = i - (tree.t - 0.5); #position offset ratio
-            childOffset *= (xOffset/tree.t); #adjusting for width of box
+            childOffset *= nextOffset; #adjusting for width of box
             printNodes(win, tree, node.c[i], actualPos, childOffset);
 
 ########################################
@@ -125,9 +127,9 @@ def printNodes(win, tree, node, pos, xOffset):
 
 bTree = BTree(2);
 
-for i in range(12):
+for i in range(30):
     bTree.insert(i);
-    win = printTree(bTree, "Test");
+    win = printTree(bTree, "Fuck off");
     win.getKey();
     win.close();
 
