@@ -100,7 +100,7 @@ def printTree(tree, title):
     return win;
 
 def printNodes(win, tree, node, pos, width):
-    halfWidth = (node.n)*6;
+    halfWidth = (node.n)*6; #this is the halfWidth for the box
 
     if(not node.leaf):
         #print lines and call recursive first

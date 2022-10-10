@@ -147,5 +147,5 @@ for letter in list(string.ascii_lowercase):
 
 win = printTree(bTreeTwo, "BTree with t=2");
 win = printTree(bTreeThree, "BTree with t=3");
-win.getMouse();
+win.getKey();
 win.close();
