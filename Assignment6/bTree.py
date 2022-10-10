@@ -46,7 +46,7 @@ class BTree(object):
         
     def insert(self, key):
         r = self.root; 
-        if(r.n == ((2*self.t) - 1)):
+        if(r.n == (2*self.t) - 1):
             s = Node(self.t);
             self.root = s;
             s.leaf = False;
@@ -76,6 +76,7 @@ class BTree(object):
             self.insertNonfull(x.c[i], key);
 
 
+
 ########################################
 # Cool graphical printing function
 # (just a modified version of what I 
@@ -83,7 +84,7 @@ class BTree(object):
 ########################################
 
 def printTree(tree, title):
-    width = 1500;
+    width = 2200;
     height = 500;
     win = GraphWin("BTree", width, height);
     win.setBackground(color_rgb(3, 42, 64));
@@ -93,33 +94,44 @@ def printTree(tree, title):
     graphTitle.setSize(10);
     graphTitle.draw(win);
 
-    printNodes(win, tree, tree.root, Point(0, 0), width/2);
+    printNodes(win, tree, tree.root, Point(width/2, 60), width);
 
     return win;
 
-def printNodes(win, tree, node, pos, xOffset):
-    actualPos = Point(pos.x + xOffset, pos.y + 65);
-    childOffset = xOffset/(2*tree.t);
-    #draw the square
-    halfWidth = ((2*tree.t)-1)*14;
-    nodeSquare = Rectangle(Point(actualPos.x - halfWidth, actualPos.y - 10), Point(actualPos.x + halfWidth, actualPos.y + 10)); 
-    nodeSquare.setOutline("white");
-    nodeSquare.draw(win);
-    #draw data
-    textOffset = tree.t - 1;
-    for i in range(0, node.n):
-        offset = (i-textOffset) * ((2*halfWidth)/((2*tree.t)-1));
-        text = Text(Point(actualPos.x + offset, actualPos.y), node.key[i]); 
-        text.setOutline("white");
-        text.draw(win);
+def printNodes(win, tree, node, pos, width):
+    halfWidth = ((2*tree.t)-1)*8;
 
-    if(node.leaf):
-        return;
-    else:
-        for i in range((-2*tree.t)-1, (2*tree.t), childOffset):
-            childOffset = i - (tree.t - 0.5); #position offset ratio
-            childOffset *= nextOffset; #adjusting for width of box
-            printNodes(win, tree, node.c[i], actualPos, childOffset);
+    if(not node.leaf):
+        #print lines and call recursive first
+        #it's kinda odd order, but it works easier I think
+        lineStart = -halfWidth; 
+        nextWidth = width / ((2*tree.t) + 2);
+        childOffsetRatio = ((-2*tree.t) + 1);
+        for i in range(0, node.n + 1):
+            childLine = Line(Point(pos.x + lineStart, pos.y+10), Point(pos.x + childOffsetRatio*(nextWidth/2), pos.y+50));
+            childLine.setOutline("white");
+            childLine.draw(win);
+            lineStart += (halfWidth*2) / ((2*tree.t) - 1);
+            childPos = Point(pos.x + childOffsetRatio*(nextWidth/2), pos.y + 60)
+            printNodes(win, tree, node.c[i], childPos, nextWidth); 
+            childOffsetRatio += 2;
+
+    #drawing box
+    rect = Rectangle(Point(pos.x - halfWidth, pos.y - 10), Point(pos.x + halfWidth, pos.y + 10)); 
+    rect.setOutline("white");
+    rect.draw(win);
+    #drawing data
+    tempKeys = [];
+    for i in range(0, (2*tree.t) - 1):
+        if(i < node.n):
+            tempKeys.append(node.key[i]);
+        else:
+            tempKeys.append("_");
+    keysText = Text(pos, tempKeys);
+    keysText.setSize(10);
+    keysText.setOutline("white");
+    keysText.draw(win);
+
 
 ########################################
 # Testing and stuff
@@ -127,13 +139,9 @@ def printNodes(win, tree, node, pos, xOffset):
 
 bTree = BTree(2);
 
-for i in range(30):
-    bTree.insert(i);
-    win = printTree(bTree, "Fuck off");
-    win.getKey();
-    win.close();
+for i in range(0, 10):
+    bTree.insert(i*2);
 
-
-
-
-
+win = printTree(bTree, "Nice BTree");
+win.getKey();
+win.close();
