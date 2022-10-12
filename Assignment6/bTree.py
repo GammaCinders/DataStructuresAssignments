@@ -139,6 +139,8 @@ bTreeTwo = BTree(2);
 bTreeThree = BTree(3);
 
 for letter in list(string.ascii_lowercase):
+    if(letter == 'm'):
+        printTree(bTreeTwo, "BTree with t=2 halfway filled");
     bTreeTwo.insert(letter);
     bTreeThree.insert(letter);
 
