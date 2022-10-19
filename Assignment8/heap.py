@@ -36,7 +36,7 @@ class Heap(object):
         self.validate(self.size);
 
     def setHeap(self, heap: list) -> None:
-        self.heap = heap;
+        self.heap = heap.copy();
         self.size = len(heap);
         for i in range(1, self.size+1):
             self.validate(i);
@@ -113,39 +113,43 @@ heapOneByOne = Heap(1000);
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(time.time() - pre);
+print(f"Ascending order OBO :\t{time.time() - pre}");
 
-pre = time.time();
 heapAtOnce = Heap(1000);
+pre = time.time();
 heapAtOnce.setHeap(data);
-print(time.time() - pre);
+print(f"Ascending order AO :\t{time.time() - pre}");
 
 ########################################
 # In descending order
 ########################################
 
+data.sort(reverse=True);
+
 heapOneByOne = Heap(1000);
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(time.time() - pre);
+print(f"Descending order OBO :\t{time.time() - pre}");
 
-pre = time.time();
 heapAtOnce = Heap(1000);
+pre = time.time();
 heapAtOnce.setHeap(data);
-print(time.time() - pre);
+print(f"Descending order AO :\t{time.time() - pre}");
 
 ########################################
 # In random order 
 ########################################
 
+random.shuffle(data);
+
 heapOneByOne = Heap(1000);
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(time.time() - pre);
+print(f"Random order OBO :\t{time.time() - pre}");
 
-pre = time.time();
 heapAtOnce = Heap(1000);
+pre = time.time();
 heapAtOnce.setHeap(data);
-print(time.time() - pre);
+print(f"Random order AO :\t{time.time() - pre}");
