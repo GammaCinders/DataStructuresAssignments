@@ -105,20 +105,34 @@ data = [];
 for i in range(1, 1001):
     data.append(i);
 
+pre = time.time();
+post = time.time() - pre;
+
+#Testing one first
+heapOneByOne = Heap(1000);
+pre = time.time();
+for i in data:
+    heapOneByOne.insert(i); 
+post = time.time() - pre;
+
+heapOneByOne.print("Testing").getMouse();
 ########################################
 # In ascending order
 ########################################
 
 heapOneByOne = Heap(1000);
+print("\nAscending Order:");
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(f"Ascending order OBO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert one by one:\t{post}");
 
 heapAtOnce = Heap(1000);
 pre = time.time();
 heapAtOnce.setHeap(data);
-print(f"Ascending order AO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert all at once:\t{post}");
 
 ########################################
 # In descending order
@@ -127,15 +141,18 @@ print(f"Ascending order AO :\t{time.time() - pre}");
 data.sort(reverse=True);
 
 heapOneByOne = Heap(1000);
+print("\nDescending Order:");
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(f"Descending order OBO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert one by one:\t{post}");
 
 heapAtOnce = Heap(1000);
 pre = time.time();
 heapAtOnce.setHeap(data);
-print(f"Descending order AO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert all at once:\t{post}");
 
 ########################################
 # In random order 
@@ -144,12 +161,16 @@ print(f"Descending order AO :\t{time.time() - pre}");
 random.shuffle(data);
 
 heapOneByOne = Heap(1000);
+print("\nRandom Order:");
 pre = time.time();
 for i in data:
     heapOneByOne.insert(i); 
-print(f"Random order OBO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert one by one:\t{post}");
 
 heapAtOnce = Heap(1000);
 pre = time.time();
 heapAtOnce.setHeap(data);
-print(f"Random order AO :\t{time.time() - pre}");
+post = time.time() - pre;
+print(f"Insert all at once:\t{post}");
+print();
