@@ -43,7 +43,7 @@ class Heap(object):
 
     def validate(self, i: int) -> bool:
         parentIndex = int(i / 2);
-        while(self.heap[i-1] > self.heap[parentIndex-1]):
+        while(self.heap[i-1] < self.heap[parentIndex-1]):
             temp = self.heap[i-1];
             self.heap[i-1] = self.heap[parentIndex-1];
             self.heap[parentIndex-1] = temp;
@@ -108,14 +108,6 @@ for i in range(1, 1001):
 pre = time.time();
 post = time.time() - pre;
 
-#Testing one first
-heapOneByOne = Heap(1000);
-pre = time.time();
-for i in data:
-    heapOneByOne.insert(i); 
-post = time.time() - pre;
-
-heapOneByOne.print("Testing").getMouse();
 ########################################
 # In ascending order
 ########################################
