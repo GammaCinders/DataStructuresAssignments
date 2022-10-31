@@ -27,7 +27,9 @@ secondCol = 0;
 for d in data[0:500]:
     secondCol += secondaryHashTable.insert(Data(d));
 
+print();
 print(f"Chain hash table collisions:\t\t\t{chainCol}");
 print(f"Linear hash table collisions:\t\t\t{linCol}");
 print(f"Quadratic hash table collisions:\t\t{quadCol}");
 print(f"Secondary hash function table collisions:\t{secondCol}");
+print();
