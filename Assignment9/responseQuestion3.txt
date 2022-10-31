@@ -1,0 +1,10 @@
+The amount of collisions for linear probing is so high because it's linear.
+As the hash table fills up, collisions are more likely, and then the value gets added at the next open spot.
+But then if you get the same hash again, you have another value to collide with before adding.
+So over time, as the table fills up, there is a much higher chance of creating long 'strings' of data
+that have collided and been added at the first open spot. So then the next value has to go over all of
+those values as well.
+
+I think the only way to reduce the number of collisions would be to increase the table size.
+If the table was larger, there would, on average, be shorter 'strings' of consecutive full spots.
+So there would be less overall collisions but you would be wasting more memory.

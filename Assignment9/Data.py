@@ -12,8 +12,9 @@ class Data:
     def hash(self) -> int:
         return self.value % 300;
 
-    def secondaryHash(self, level) -> int:
-        return 9973 - (level % 9973);
+    #doing params like this because it works 
+    def secondaryHash(self, num) -> int:
+        return num - (self.value % num);
 
     def __str__(self):
         return str(self.value);
