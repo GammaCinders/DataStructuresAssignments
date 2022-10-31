@@ -21,22 +21,23 @@ class HashTable(object):
     def __init__(self):
         self.table = [None]*10;
 
-    def insert(self, data: Data):
+    def insert(self, data: Data) -> int:
         #Both constants are just 1
-        a = b = level = 1;
+        level = 0;
         offset = 0;
         while(self.table[(data.hash()+offset)%10]):
-            offset = (a*level) + (b*(level**2));
             level += 1;
+            offset = level**2;
         self.table[(data.hash()+offset)%10] = data;
+        return level; #collisions
 
     #Searches for a data object with the same value
     #not neccesarily the exact same data object
     def search(self, data) -> Data:
-        a = b = level = 1;
+        level = 1;
         offset = 0;
         while(self.table[(data.hash()+offset)%10].value != data.value):
-            offset = a*level + b*(level**2);
+            offset = level**2;
             level += 1;
         return self.table[(data.hash()+offset)%10];
 
@@ -46,10 +47,3 @@ class HashTable(object):
             string += f"{row}:\t"
             string += f"{self.table[row]}\n" if self.table[row] else "\n";
         return string;
-
-data = [4371, 1323, 6173, 4199, 4344, 9679, 1989];
-
-ht = HashTable();
-for i in data:
-    ht.insert(Data(i));
-    print(ht);

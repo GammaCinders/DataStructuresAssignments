@@ -12,6 +12,9 @@ class Data:
     def hash(self):
         return self.value % 10;
 
+    def secondaryHash(self, level):
+        return 7 - (level % 7);
+
     def __str__(self):
         return str(self.value);
     
@@ -22,24 +25,23 @@ class HashTable(object):
         self.table = [None]*10;
 
     def insert(self, data: Data) -> int:
+        level = 0;
         offset = 0;
-        #could run forevery
         while(self.table[(data.hash()+offset)%10]):
-            offset += 1;
+            level += 1;
+            offset = data.secondaryHash(level);
         self.table[(data.hash()+offset)%10] = data;
-        return offset; #collisions
+        return level;
 
     #Searches for a data object with the same value
     #not neccesarily the exact same data object
     def search(self, data) -> Data:
-        #Do at most one full rotation
-        for i in range(data.hash(), data.hash()+len(self.table)):
-            searchData = self.table[i%10];
-            if(not searchData):
-                return;
-            elif(searchData.value == data.value):
-                return searchData;
-        return None;
+        level = 0;
+        offset = 0;
+        while(self.table[(data.hash()+offset)%10].value != data.value):
+            offset = data.secondaryHash(level);
+            level += 1;
+        return self.table[(data.hash()+offset)%10];
 
     def __str__(self):
         string = "";

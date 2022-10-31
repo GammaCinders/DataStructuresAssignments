@@ -18,14 +18,18 @@ class HashTable(object):
     def __init__(self):
         self.table = [None]*10;
 
-    def insert(self, data: Data):
+    def insert(self, data: Data) -> int:
         if(not self.table[data.hash()]):
             self.table[data.hash()] = data;
+            return 0;
         else:
             temp = self.table[data.hash()];
+            collisions = 1;
             while(temp.nextData):
                 temp = temp.nextData;
+                collisions += 1;
             temp.nextData = data;
+            return collisions;
 
     #Searches for a data object with the same value
     #not neccesarily the exact same data object
@@ -48,10 +52,3 @@ class HashTable(object):
 
         return string;
 
-data = [4371, 1323, 6173, 4199, 4344, 9679, 1989];
-
-ht = HashTable();
-for i in data:
-    ht.insert(Data(i));
-
-print(ht);
