@@ -2,7 +2,6 @@ from Data import Data;
 from HashTable import HashTable;
 
 class ChainHashTable(HashTable):
-
     def insert(self, data: Data) -> int:
         if(not self.table[data.hash()]):
             self.table[data.hash()] = data;
@@ -30,7 +29,6 @@ class ChainHashTable(HashTable):
 
 
 class LinearHashTable(HashTable):
-
     def insert(self, data: Data) -> int:
         offset = 0;
         while(self.table[(data.hash()+offset)%(len(self.table))]):
@@ -40,7 +38,6 @@ class LinearHashTable(HashTable):
 
 
 class QuadraticHashTable(HashTable):
-
     def insert(self, data: Data) -> int:
         level = 0;
         offset = 0;
@@ -52,7 +49,6 @@ class QuadraticHashTable(HashTable):
 
 
 class SecondaryHashTable(HashTable):
-
     def insert(self, data: Data) -> int:
         level = 0;
         offset = 0;
