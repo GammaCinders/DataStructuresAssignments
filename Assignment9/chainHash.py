@@ -1,22 +1,7 @@
-from dataclasses import dataclass;
-
-@dataclass
-class Data:
-    value: object;
-    nextData: object;
-
-    def __init__(self, value) -> None:
-        self.value = value;
-        self.nextData = None;
-
-    def hash(self):
-        return self.value % 10;
+from Data import Data;
+from HashTable import HashTable;
     
-class HashTable(object):
-    table: list;
-
-    def __init__(self):
-        self.table = [None]*10;
+class ChainHashTable(HashTable):
 
     def insert(self, data: Data) -> int:
         if(not self.table[data.hash()]):
@@ -30,15 +15,6 @@ class HashTable(object):
                 collisions += 1;
             temp.nextData = data;
             return collisions;
-
-    #Searches for a data object with the same value
-    #not neccesarily the exact same data object
-    def search(self, data):
-        searchData = self.table[data.hash()];
-        while(searchData):
-            if(searchData.value == data.value):
-                return searchData;
-        return False;            
 
     def __str__(self):
         string = "";
