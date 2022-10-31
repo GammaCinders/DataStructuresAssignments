@@ -1,4 +1,4 @@
-from Data import Data;
+from HashTable import Data;
 from HashTable import HashTable;
 
 class ChainHashTable(HashTable):

@@ -1,4 +1,4 @@
-from Data import Data;
+from HashTable import Data;
 from HashTables import ChainHashTable, LinearHashTable, QuadraticHashTable, DoubleHashTable;
 import random;
 
