@@ -156,6 +156,17 @@ dfs(graph, 24);
 
 print(f"\nTopological Sort on graph");
 print(f"{graph.topSort()}");
+
+
+strongData  = [ [0,  1], [1, 2], [2, 3], [2, 11],
+                [3, 10], [4, 5], [4, 7], [6,  5],
+                [7,  6], [7, 8], [9, 3], [9,  8],
+                [10, 9], [11, 0]                ];
+
+strongGraph = Graph(12);
+for edge in range(len(strongData)):
+    strongGraph.addEdge(strongData[edge][0], strongData[edge][1]);
+
 print(f"\nStrongly connected component groups");
-print(f"{scc(graph)}\n");
+print(f"{scc(strongGraph)}\n");
 
