@@ -22,9 +22,14 @@ class Graph(object):
         self.matrix[start][end] = 0;
 
     def __str__(self):
-        out = "";
-        for row in self.matrix:
-            out += f"{row}\n";
+        out = " ";
+        letters = ['s', 't', 'a', 'b', 'c', 'd'];
+        for letter in letters:
+            out += f" {letter}";
+        for start in range(len(self.matrix)):
+            out += f"\n{letters[start]} ";
+            for end in range(len(self.matrix)):
+                out += f"{self.matrix[start][end]} ";
 
         return out;
 
@@ -97,4 +102,6 @@ g = Graph(6);
 for data in gData:
     g.setEdge(data[0], data[1], data[2]);
 
+print(f"\nMaximum flow based on graph from assignment as a weighted adjacency matrix\n");
 print(Ford(g));
+print();
