@@ -10,7 +10,7 @@ class Item(object):
         self.value = value;
 
     def __str__(self):
-        return f"Item: ({self.weight}, {self.value})";
+        return f"(Value:{self.value}, Weight:{self.weight})";
 
 class House(object):
     items: list;
@@ -22,7 +22,7 @@ class House(object):
         self.items.append(Item(weight, value));
 
     def findMaxValue(self, bagSize: int):
-        maxValue = [[0]*len(self.items) for i in range(bagSize+1)];
+        maxValue = [[0]*(bagSize+1) for i in range(len(self.items))];
 
         for item in range(len(self.items)):
             for maxWeight in range(bagSize+1):
@@ -31,21 +31,36 @@ class House(object):
 
                 # Add item to current value and weight if possible
                 if (self.items[item].weight <= tempMaxWeight):
-                    print(self.items[item].weight);
-                    print(tempMaxWeight);
                     tempMaxWeight -= self.items[item].weight;
                     tempMaxValue += self.items[item].value;
 
-                # Call what you have left (problem already solved
-                # TODO assumes no item weighs 0
-                if (tempMaxWeight > 0 and item > 0):
-                    tempMaxValue += maxValue[tempMaxWeight][item-1];
+                # Call what you have left (problem already solved)
+                # Takes advantage of python having negative indexing (in first loop)
+                tempMaxValue += maxValue[item-1][tempMaxWeight];
 
                 # Add if value is greater
-                if (tempMaxValue > maxValue[maxWeight][item]):
-                    maxValue[maxWeight][item] = tempMaxValue;
+                if (tempMaxValue > maxValue[item-1][maxWeight]):
+                    maxValue[item][maxWeight] = tempMaxValue;
+                else:
+                    maxValue[item][maxWeight] = maxValue[item-1][maxWeight];
 
-        return maxValue;
+
+        # Now find and print which items were used
+        usedItems = [False]*len(self.items); 
+        usedWeight = 0;
+        # Go through backwards
+        print(f"Max Value: {maxValue[len(self.items)-1][bagSize]}");
+        print(f"Item used:");
+        for item in range(len(self.items)-1, -1, -1):
+            if (maxValue[item][bagSize] != maxValue[item-1][bagSize]):
+                print(f"\t{self.items[item]}");
+                usedItems[item] = True;
+                usedWeight += self.items[item].weight;
+
+            if (usedWeight >= bagSize):
+                break;
+
+        return usedItems;
 
 
     def __str__(self):
@@ -56,15 +71,38 @@ class House(object):
 
 
 
+########################################
+# Setup and output for Knapsack #1
+########################################
+
 firstSet = [(1, 1), (6, 2), (18, 5), (22, 6), (28, 7)];
 
-house = House();
+firstProblem = House();
 for item in firstSet:
-    house.addItem(item[1], item[0]);
+    firstProblem.addItem(item[1], item[0]);
 
-maxValues = house.findMaxValue(11);
-for row in maxValues:
-    print(row);
+print();
+firstProblem.findMaxValue(11);
 
 
+
+########################################
+# Setup and output for Knapsack #2
+########################################
+
+secSet = [(16808, 250), (50074, 659), (8931, 273), (27545, 879), (77924, 710), 
+          (64441, 166), (84493, 43), (7988, 504), (82328, 730), (78841, 613), 
+          (44304, 170), (17710, 158), (29561, 934), (93100, 279), (51817, 336), 
+          (99098, 827), (13513, 268), (23811, 634), (80980, 150), (36580, 822), 
+          (11968, 673), (1394, 337), (25486, 746), (25229, 92), (40195, 358), 
+          (35002, 154), (16709, 945), (15669, 491), (88125, 197), (9531, 904), 
+          (27723, 667), (28550, 25)];
+
+secProblem = House();
+for item in secSet:
+    secProblem.addItem(item[1], item[0]);
+
+print();
+secProblem.findMaxValue(10000);
+print();
 
