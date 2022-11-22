@@ -1,0 +1,49 @@
+Item class variables:
+	weight: an int representing the weight needed to put the item in a bag
+	value: the arbitrary value assigned to the Item
+
+House class variables:
+	items: a list of Itemso
+
+House findMaxValue function variables:
+
+	
+	bagSize: the max weight you can hold, I thought it would make sense
+		to call it the bagSize, it's in flavor with the whole 
+		'robbing from a house' Knapsack idea.	
+
+
+	Variables for creating the max value for each item at all weights:
+
+	maxValue: an 2d array that represents the cost and item matrix we 
+		discussed in class. (Where the rows are the items, and the columns
+		are the max weight of the bag.)
+	
+	item: an int iterator to go through each item (each row in the maxValue array)
+
+	maxWeight: int iterator to go through each max weight for a given item.
+		(Goes through columns in maxValue array.) Goes from 0 to the bag size argument.
+	
+	tempMaxWeight: used to subtract the weight of the current item, if it fits, so that
+		we know what already solved case we can add to value.
+
+	tempMaxValue: used to add the current item, if it fits, and the value of the leftover
+		weight that was already solved in the row above.
+
+
+	Variables for figuring out which items were used:
+	 
+	usedItems: bool array that tells if a specific item was used 
+		(lines up with class variable items from House class)
+
+	usedWeight: used to ensure that items are not counted that weren't actually used,
+		because if weight is ignored you can count previously used items that 
+		don't fit anymore.
+
+	item: int iterator that goes backwards through the maxValue array item (rows) above.
+		used to check if an item was used at the given bagSize based on the item/row 
+		above. (If an item was used, there would be a different maxValue at that pos.
+	
+	
+	
+	
